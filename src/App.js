@@ -4,7 +4,7 @@ import router from './Routes/Routes';
 
 function App() {
   return (
- <div className="">
+ <div className="container mx-auto">
   <RouterProvider router={router}>
   </RouterProvider>
  </div>
