@@ -7,15 +7,15 @@ const Header = () => {
   console.log(user?.displayName);
   const handleLogOut = () => {
     userLogOut()
-    .then(()=>{})
-    .catch(()=>{})
+      .then(() => {})
+      .catch(() => {});
   };
   const menu = {
     public: (
       <>
         <li>
           <Link to="/">Home</Link>
-          <Link to={'/courses'}>Courses</Link>
+          <Link to={"/courses"}>Courses</Link>
           <Link>FAQ</Link>
           <Link to={"/blog"}>BLOG</Link>
           <>
@@ -89,9 +89,29 @@ const Header = () => {
           <ul className="menu menu-horizontal p-0">{menu.public}</ul>
         </div>
         <div className="navbar-end">
+          <label tabIndex={0} className="btn btn-ghost lg:hidden" htmlFor="my-drawer-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </label>
           <div className="tooltip tooltip-bottom" data-tip={user?.displayName}>
             <button className="border border-blue-700 rounded-full">
-              <img className=" w-12 h-12 rounded-full" src={user?.photoURL} alt="" />
+              <img
+                className=" w-12 h-12 rounded-full"
+                src={user?.photoURL}
+                alt=""
+              />
             </button>
           </div>
         </div>
