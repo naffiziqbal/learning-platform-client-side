@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   getAuth,
+  GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -14,6 +15,7 @@ import app from "../Fireabse/firebse.init";
 export const AuthProvider = createContext();
 export const auth = getAuth(app);
 const gProvider = new GoogleAuthProvider();
+const gitProvider = new GithubAuthProvider();
 
 const AuthContext = ({ children }) => {
   const [user, setUser] = useState([]);
@@ -21,12 +23,12 @@ const AuthContext = ({ children }) => {
 
   // Create User
   const createUser = (email, password) => {
-    setLoading(true)
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
   //Update User Profile
   const handleUpdateProfile = (profile) => {
-    return updateProfile(auth.currentUser,profile);
+    return updateProfile(auth.currentUser, profile);
   };
   // Log in User
   const logIn = (email, password) => {
@@ -36,10 +38,14 @@ const AuthContext = ({ children }) => {
   const googleLogin = () => {
     return signInWithRedirect(auth, gProvider);
   };
-  //Handle Log Out
-  const userLogOut = ()=>{
-    return signOut(auth)
+  //Handle Login With Github
+  const githubLogin =()=>{
+    return signInWithRedirect(auth, gitProvider);
   }
+  //Handle Log Out
+  const userLogOut = () => {
+    return signOut(auth);
+  };
   useEffect(() => {
     const unsubcribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -55,7 +61,8 @@ const AuthContext = ({ children }) => {
     loading,
     setLoading,
     googleLogin,
-    userLogOut
+    userLogOut,
+    githubLogin,
   };
   return (
     <div>

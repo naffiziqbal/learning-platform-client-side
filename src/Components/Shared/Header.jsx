@@ -90,7 +90,7 @@ const Header = () => {
         </div>
         <div className="navbar-end">
           <div className="tooltip tooltip-bottom" data-tip={user?.displayName}>
-            <button className="">
+            <button className="border border-blue-700 rounded-full">
               <img className=" w-12 h-12 rounded-full" src={user?.photoURL} alt="" />
             </button>
           </div>

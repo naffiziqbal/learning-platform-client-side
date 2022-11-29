@@ -1,23 +1,39 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthProvider } from "../../UserContext/AuthContext";
+import './Style.css'
+
 
 const Login = () => {
-  const { logIn } = useContext(AuthProvider);
+  const { logIn, googleLogin, githubLogin } = useContext(AuthProvider);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     console.log(data);
-    logIn(data.name, data.email)
-    .then(result => {
-        const user = result.user;
-        console.log(user);
-        
-    })
+    logIn(data.name, data.email).then((result) => {
+      const user = result.user;
+      console.log(user);
+      reset();
+    });
+  };
+  const handleGoogleLogin = () => {
+    googleLogin().then((result) => {
+      const user = result.user;
+      navigate("/");
+    });
+  };
+  const handleGitLogIn = () => {
+    githubLogin().then((result) => {
+      const user = result.user;
+      navigate("/");
+    });
   };
 
   return (
@@ -26,6 +42,26 @@ const Login = () => {
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col">
           <div className="card  w-full shadow-2xl bg-base-100">
+          <div className="my-5 flex justify-evenly">
+              <div>
+                <NavLink
+                  to={"/login"}
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                  Log In
+                </NavLink>
+              </div>
+              <div>
+                {" "}
+                <NavLink
+                  to={"/signup"}
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                 Sign Up
+                </NavLink>
+              </div>
+            </div>
+            <hr />
             <form className="card-body" onSubmit={handleSubmit(onSubmit)}>
               <div className="form-control">
                 <label className="label">
@@ -64,6 +100,17 @@ const Login = () => {
                 <input type={"submit"} className="btn btn-primary" />
               </div>
             </form>
+            <hr />
+            <div className="my-5">
+              <button className="btn btn-primary" onClick={handleGoogleLogin}>
+                {" "}
+                Log In With Google
+              </button>
+              <button className="btn my-5" onClick={handleGitLogIn}>
+                {" "}
+                Log In With Github
+              </button>
+            </div>
           </div>
         </div>
       </div>{" "}

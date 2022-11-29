@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthProvider } from "../../UserContext/AuthContext";
+import "./Style.css";
 
 const Signup = () => {
-  const { createUser, handleUpdateProfile } = useContext(AuthProvider);
-  const navigate = useNavigate()
+  const { createUser, handleUpdateProfile, googleLogin, githubLogin } =
+    useContext(AuthProvider);
+  const navigate = useNavigate();
   // const imgHostKey = process.env.IMG_BB_HOST_KEY
   // console.log(imgHostKey);
   const url = `https://api.imgbb.com/1/upload?key=c4fb97e7290fa8d31a86af5335890d26`;
@@ -27,22 +29,19 @@ const Signup = () => {
     createUser(data.email, data.name, data.password).then((result) => {
       const user = result.user;
       console.log(user);
-fetch(url, {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((imgData) => {
-        console.log(imgData);
-        if (imgData.success) {
-          updateProfile(data.name, imgData.data.url)
-          navigate('/')
-
-        }
-      });
+      fetch(url, {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((imgData) => {
+          console.log(imgData);
+          if (imgData.success) {
+            updateProfile(data.name, imgData.data.url);
+            navigate("/");
+          }
+        });
     });
-
-    
   };
   //Handle User Info
   const updateProfile = (displayName, photoURL) => {
@@ -57,12 +56,44 @@ fetch(url, {
       .catch((err) => console.log(err));
   };
   //   const
+  const handleGoogleLogin = () => {
+    googleLogin().then((result) => {
+      const user = result.user;
+      navigate("/");
+    });
+  };
+  const handleGitLogIn = () => {
+    githubLogin().then((result) => {
+      const user = result.user;
+      navigate("/");
+    });
+  };
 
   return (
-    <div>
+    <div className="">
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col">
           <div className="card  w-full shadow-2xl bg-base-100">
+            <div className="my-5 flex justify-evenly">
+              <div>
+                <NavLink
+                  to={"/login"}
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                  Log In
+                </NavLink>
+              </div>
+              <div>
+                {" "}
+                <NavLink
+                  to={"/signup"}
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                 Sign Up
+                </NavLink>
+              </div>
+            </div>
+            <hr />
             <form className="card-body" onSubmit={handleSubmit(onSubmit)}>
               <div className="form-control">
                 <label className="label">
@@ -126,6 +157,17 @@ fetch(url, {
                 <input type={"submit"} className="btn btn-primary" />
               </div>
             </form>
+            <hr />
+            <div className="mt-5 grid p-2">
+              <button className="btn btn-primary" onClick={handleGoogleLogin}>
+                {" "}
+                Log In With Google
+              </button>
+              <button className="btn my-5" onClick={handleGitLogIn}>
+                {" "}
+                Log In With Github
+              </button>
+            </div>
           </div>
         </div>
       </div>
