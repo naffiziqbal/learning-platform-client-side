@@ -3,7 +3,13 @@ import { Link } from "react-router-dom";
 import AuthContext, { AuthProvider } from "../../UserContext/AuthContext";
 
 const Header = () => {
-    const {user} = useContext(AuthProvider)
+  const { user, userLogOut } = useContext(AuthProvider);
+  console.log(user?.displayName);
+  const handleLogOut = () => {
+    userLogOut()
+    .then(()=>{})
+    .catch(()=>{})
+  };
   const menu = {
     public: (
       <>
@@ -11,7 +17,7 @@ const Header = () => {
           <Link to="/">Home</Link>
           <Link>Courses</Link>
           <Link>FAQ</Link>
-          <Link>BLOG</Link>
+          <Link to={"/blog"}>BLOG</Link>
           <>
             <label className="swap swap-rotate text-left">
               {/* <!-- this hidden checkbox controls the state --> */}
@@ -36,7 +42,13 @@ const Header = () => {
               </svg>
             </label>
           </>
-          <Link>Log out</Link>
+          {!user?.uid && (
+            <>
+              <Link to="/login">Log In</Link>
+              <Link to="/signup">Sign Up</Link>
+            </>
+          )}
+          {user?.uid && <Link onClick={handleLogOut}>Log out</Link>}
         </li>
       </>
     ),
@@ -77,8 +89,10 @@ const Header = () => {
           <ul className="menu menu-horizontal p-0">{menu.public}</ul>
         </div>
         <div className="navbar-end">
-          <div className="tooltip tooltip-bottom" data-tip={user.name}>
-            <button className="btn">User Img</button>
+          <div className="tooltip tooltip-bottom" data-tip={user?.displayName}>
+            <button className="">
+              <img className=" w-12 h-12 rounded-full" src={user?.photoURL} alt="" />
+            </button>
           </div>
         </div>
       </div>
