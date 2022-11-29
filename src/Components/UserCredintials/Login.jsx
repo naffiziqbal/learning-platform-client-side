@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AuthProvider } from "../../UserContext/AuthContext";
 import './Style.css'
 
@@ -14,6 +14,9 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || '/'
+
 
   const onSubmit = (data) => {
     console.log(data);
@@ -32,7 +35,7 @@ const Login = () => {
   const handleGitLogIn = () => {
     githubLogin().then((result) => {
       const user = result.user;
-      navigate("/");
+      navigate(from , {replace : true});
     });
   };
 
