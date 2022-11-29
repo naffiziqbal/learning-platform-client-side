@@ -29,7 +29,7 @@ const Login = () => {
   const handleGoogleLogin = () => {
     googleLogin().then((result) => {
       const user = result.user;
-      navigate("/");
+      navigate(from , {replace : true});
     });
   };
   const handleGitLogIn = () => {

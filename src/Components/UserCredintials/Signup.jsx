@@ -1,13 +1,16 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AuthProvider } from "../../UserContext/AuthContext";
 import "./Style.css";
 
 const Signup = () => {
   const { createUser, handleUpdateProfile, googleLogin, githubLogin } =
     useContext(AuthProvider);
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || '/'
+  
   // const imgHostKey = process.env.IMG_BB_HOST_KEY
   // console.log(imgHostKey);
   const url = `https://api.imgbb.com/1/upload?key=c4fb97e7290fa8d31a86af5335890d26`;
@@ -38,7 +41,7 @@ const Signup = () => {
           console.log(imgData);
           if (imgData.success) {
             updateProfile(data.name, imgData.data.url);
-            navigate("/");
+            navigate(from , {replace : true});
           }
         });
     });
@@ -59,13 +62,13 @@ const Signup = () => {
   const handleGoogleLogin = () => {
     googleLogin().then((result) => {
       const user = result.user;
-      navigate("/");
+      navigate(from , {replace : true});
     });
   };
   const handleGitLogIn = () => {
     githubLogin().then((result) => {
       const user = result.user;
-      navigate("/");
+      navigate(from , {replace : true});
     });
   };
 
