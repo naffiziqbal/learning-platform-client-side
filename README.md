@@ -15,4 +15,4 @@ This Site Is A LMS Based Website Where Every one can Buy Courses Online!
 * React To PDF For PDF 
 * SWeet Alert : For Modal alert 
 
-`Live Links: https://learningbd-bd2dd.web.app/`
+`Live Links` https://learningbd-bd2dd.web.app/
