@@ -2,6 +2,7 @@ import React, { createRef } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import Pdf from "react-to-pdf";
 import { DocumentIcon } from "@heroicons/react/24/solid";
+import useTitle from "../../../Hooks/useTitle";
 
 const CourseDetails = () => {
   const data = useLoaderData();
@@ -16,6 +17,8 @@ const CourseDetails = () => {
     tagline,
     id,
   } = data;
+
+  useTitle(title)
 
   const ref = createRef();
   return (
