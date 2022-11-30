@@ -5,9 +5,9 @@ const Course = ({ course }) => {
   const { title, course_Img, description, id } = course;
   return (
     <div>
-      <div className="card  bg-base-100 shadow-xl">
+      <div className="card  bg-base-100 shadow-xl ">
         <figure>
-          <img className=" max-w-md " src={course_Img} alt="Movie" />
+          <img className=" max-w-md hover:scale-110 duration-300" src={course_Img} alt="Movie" />
         </figure>
         <div className="card-body">
           <h2 className="card-title">{title}</h2>
