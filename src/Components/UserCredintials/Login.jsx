@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { AuthProvider } from "../../UserContext/AuthContext";
-import './Style.css'
-
+import "./Style.css";
 
 const Login = () => {
   const { logIn, googleLogin, githubLogin } = useContext(AuthProvider);
@@ -15,28 +15,65 @@ const Login = () => {
   } = useForm();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location?.state?.from?.pathname || '/'
-
+  const from = location?.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
     console.log(data);
-    logIn(data.name, data.email).then((result) => {
-      const user = result.user;
-      console.log(user);
-      reset();
-    });
+    logIn(data.name, data.email)
+      .then((result) => {
+        const user = result.user;
+        Swal.fire(
+          'Good job!',
+          'Log In Success',
+          'success'
+        )
+        reset();
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: err,
+          text: err.message,
+        });
+      });
   };
   const handleGoogleLogin = () => {
-    googleLogin().then((result) => {
-      const user = result.user;
-      navigate(from , {replace : true});
-    });
+    googleLogin()
+      .then((result) => {
+        const user = result.user;
+        Swal.fire(
+          'Good job!',
+          'Log In Success',
+          'success'
+        )
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: err,
+          text: err.message,
+        });
+      });
   };
   const handleGitLogIn = () => {
-    githubLogin().then((result) => {
-      const user = result.user;
-      navigate(from , {replace : true});
-    });
+    githubLogin()
+      .then((result) => {
+        const user = result.user;
+        Swal.fire(
+          'Good job!',
+          'Log In Success',
+          'success'
+        )
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: err,
+          text: err.message,
+        });
+      });
   };
 
   return (
@@ -45,7 +82,7 @@ const Login = () => {
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col">
           <div className="card  w-full shadow-2xl bg-base-100">
-          <div className="my-5 flex justify-evenly">
+            <div className="my-5 flex justify-evenly">
               <div>
                 <NavLink
                   to={"/login"}
@@ -60,7 +97,7 @@ const Login = () => {
                   to={"/signup"}
                   className={({ isActive }) => (isActive ? "active" : "")}
                 >
-                 Sign Up
+                  Sign Up
                 </NavLink>
               </div>
             </div>

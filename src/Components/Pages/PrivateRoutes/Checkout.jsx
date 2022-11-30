@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Checkout = () => {
   const [state, setState] = useState("Place Order");
@@ -17,7 +18,12 @@ const Checkout = () => {
   } = data;
 
   const order = () =>{
-    setState('Order Placed')
+    setState('Order Placed');
+    Swal.fire(
+      'Good job!',
+      'Order Success',
+      'success'
+    )
   }
   return (
     <div>

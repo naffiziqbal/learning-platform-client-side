@@ -1,16 +1,17 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { AuthProvider } from "../../UserContext/AuthContext";
 import "./Style.css";
 
 const Signup = () => {
   const { createUser, handleUpdateProfile, googleLogin, githubLogin } =
     useContext(AuthProvider);
-    const navigate = useNavigate();
-    const location = useLocation();
-    const from = location?.state?.from?.pathname || '/'
-  
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
+
   // const imgHostKey = process.env.IMG_BB_HOST_KEY
   // console.log(imgHostKey);
   const url = `https://api.imgbb.com/1/upload?key=c4fb97e7290fa8d31a86af5335890d26`;
@@ -29,22 +30,30 @@ const Signup = () => {
     formData.append("image", image);
     // console.log(formData);
 
-    createUser(data.email, data.name, data.password).then((result) => {
-      const user = result.user;
-      console.log(user);
-      fetch(url, {
-        method: "POST",
-        body: formData,
+    createUser(data.email, data.name, data.password)
+      .then((result) => {
+        const user = result.user;
+        Swal.fire("Good job!", "Log In Success", "success");
+        fetch(url, {
+          method: "POST",
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then((imgData) => {
+            if (imgData.success) {
+              updateProfile(data.name, imgData.data.url);
+              Swal.fire("Good job!", "Sign Up Success", "success");
+              navigate(from, { replace: true });
+            }
+          });
       })
-        .then((res) => res.json())
-        .then((imgData) => {
-          console.log(imgData);
-          if (imgData.success) {
-            updateProfile(data.name, imgData.data.url);
-            navigate(from , {replace : true});
-          }
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: err,
+          text: err.message,
         });
-    });
+      });
   };
   //Handle User Info
   const updateProfile = (displayName, photoURL) => {
@@ -52,24 +61,56 @@ const Signup = () => {
       displayName,
       photoURL,
     };
-    console.log(profile);
-
     handleUpdateProfile(profile)
-      .then(() => {})
-      .catch((err) => console.log(err));
+      .then(() => {
+        Swal.fire("Good job!", "Log In Success", "success");
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: err,
+          text: err.message,
+        });
+      });
   };
   //   const
   const handleGoogleLogin = () => {
-    googleLogin().then((result) => {
-      const user = result.user;
-      navigate(from , {replace : true});
-    });
+    googleLogin()
+      .then((result) => {
+        const user = result.user;
+        Swal.fire(
+          'Good job!',
+          'Log In Success',
+          'success'
+        )
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: err,
+          text: err.message,
+        });
+      });
   };
   const handleGitLogIn = () => {
-    githubLogin().then((result) => {
-      const user = result.user;
-      navigate(from , {replace : true});
-    });
+    githubLogin()
+      .then((result) => {
+        const user = result.user;
+        Swal.fire(
+          'Good job!',
+          'Log In Success',
+          'success'
+        )
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: err,
+          text: err.message,
+        });
+      });
   };
 
   return (
@@ -92,7 +133,7 @@ const Signup = () => {
                   to={"/signup"}
                   className={({ isActive }) => (isActive ? "active" : "")}
                 >
-                 Sign Up
+                  Sign Up
                 </NavLink>
               </div>
             </div>

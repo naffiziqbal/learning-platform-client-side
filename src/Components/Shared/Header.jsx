@@ -1,14 +1,35 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import AuthContext, { AuthProvider } from "../../UserContext/AuthContext";
 
 const Header = () => {
   const { user, userLogOut } = useContext(AuthProvider);
   console.log(user?.displayName);
+
+  // Swal.fire(
+  //   'Good job!',
+  //   'Log In Success',
+  //   'success'
+  // )
+
   const handleLogOut = () => {
-    userLogOut()
-      .then(() => {})
-      .catch(() => {});
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Log Out",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        userLogOut()
+          .then(() => {})
+          .catch(() => {});
+        Swal.fire("Logged Out!", "Successfully Logged Out.", "success");
+      }
+    });
   };
   const menu = {
     public: (
@@ -89,7 +110,11 @@ const Header = () => {
           <ul className="menu menu-horizontal p-0">{menu.public}</ul>
         </div>
         <div className="navbar-end">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden" htmlFor="my-drawer-2">
+          <label
+            tabIndex={0}
+            className="btn btn-ghost lg:hidden"
+            htmlFor="my-drawer-2"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
