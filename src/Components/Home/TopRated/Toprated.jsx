@@ -12,7 +12,7 @@ const Toprated = () => {
   console.log(courses);
 
   return (
-    <div>
+    <div className="my-5">
       <h3 className="text-4xl font-bold text-blue-600 text-center my-5">
         Our Top Rated Courses
       </h3>
