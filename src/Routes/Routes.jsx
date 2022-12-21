@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         path: "/courses/:id",
         element: <CourseDetails />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/courses/${params.id}`),
+          fetch(`https://learn-digital-naffiziqbal.vercel.app/courses/${params.id}`),
       },
       {
         path: "/checkout/:id",
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/courses/${params.id}`),
+          fetch(`https://learn-digital-naffiziqbal.vercel.app/courses/${params.id}`),
       },
     ],
   },

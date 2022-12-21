@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const Checkout = () => {
   const [state, setState] = useState("Place Order");
   const data = useLoaderData();
-  console.log(data);
+  // console.log(data);
   const {
     title,
     course_Img,

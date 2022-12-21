@@ -5,7 +5,7 @@ import Blog from './Blog';
 const Blogs = () => {
     const [data, setData] = useState([])
     useEffect(()=>{
-        axios.get(`http://localhost:5000/blog`)
+        axios.get(`https://learn-digital-naffiziqbal.vercel.app/blog`)
         .then(res => setData(res.data))
     },[])
     return (

@@ -5,7 +5,7 @@ import AuthContext, { AuthProvider } from "../../UserContext/AuthContext";
 
 const Header = () => {
   const { user, userLogOut } = useContext(AuthProvider);
-  console.log(user?.displayName);
+  // console.log(user?.displayName);
 
   // Swal.fire(
   //   'Good job!',

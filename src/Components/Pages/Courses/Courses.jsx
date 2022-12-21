@@ -12,10 +12,10 @@ const Courses = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/courses`)
+      .get(`https://learn-digital-naffiziqbal.vercel.app/courses`)
       .then((res) => setCourses(res.data));
   }, []);
-  console.log(courses);
+  // console.log(courses);
 if(loading){
     return <Loading/>
 }

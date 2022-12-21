@@ -6,7 +6,7 @@ import useTitle from "../../../Hooks/useTitle";
 
 const CourseDetails = () => {
   const data = useLoaderData();
-  console.log(data);
+  // console.log(data);
   const {
     title,
     course_Img,
